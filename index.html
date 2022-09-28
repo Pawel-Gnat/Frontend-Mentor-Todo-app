@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Frontend Mentor Todo app</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+	<header class="header">
+		<div class="header-area">
+			<h1 class="header-area__heading">todo</h1>
+			<button class="header-area__btn" role="button" aria-label="change theme">
+				<img src="./images/icon-moon.svg" alt="moon icon">
+			</button>
+		</div>
+	</header>
+	<main>
+		<section class="to-do-app">
+			<div class="input-container">
+				<span class="input-container__span"></span>
+				<input type="text" class="input-container__input" id="create_task" placeholder="Create a new todo...">
+				<label for="create_task" class="input-container__label">Create a new todo</label>
+			</div>
+			<ul class="task-container">
+				<li class="task">
+					<label for="" class="task__textarea">
+						<span class="task-container__textarea--span"></span>
+						<input type="checkbox" class="task-container__textarea--input">
+						task nr 1 213saklasdas
+					</label>
+					<button class="task__delete"><img src="./images/icon-cross.svg" alt="Delete task icon"
+							class="task__delete--x-img"></button>
+				</li>
+
+
+
+
+			</ul>
+
+		</section>
+	</main>
+	<footer>
+		<p class="footer__author">Challenge by <a href="https://www.frontendmentor.io" target="_blank"
+				rel="noopener">Frontend Mentor</a>.
+			Coded by <a href="https://github.com/Pawel-Gnat" target="_blank" rel="noopener">Paweł Gnat</a>.</p>
+	</footer>
+	<script src="./js/main.js"></script>
+</body>
+
+</html>

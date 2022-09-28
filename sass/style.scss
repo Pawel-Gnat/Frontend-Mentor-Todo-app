@@ -1,0 +1,33 @@
+/* VARIABLES */
+@import './colors';
+
+/* SITE */
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: 'Josefin Sans', sans-serif;
+	min-height: 100vh;
+	// background-color: $very_light_gray;
+}
+
+/* SECTION */
+
+footer {
+	text-align: center;
+}
+
+/* MEDIA QUERIES */
+
+@media (min-width: 576px) {
+}
