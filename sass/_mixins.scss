@@ -1,0 +1,6 @@
+@mixin circle {
+	height: 2rem;
+	min-width: 2rem;
+	border-radius: 50%;
+	border: 1px solid $light-grayish-blue_light;
+}

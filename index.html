@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Frontend Mentor Todo app</title>
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
@@ -17,7 +18,7 @@
 		<div class="header-area">
 			<h1 class="header-area__heading">todo</h1>
 			<button class="header-area__btn" role="button" aria-label="change theme">
-				<img src="./images/icon-moon.svg" alt="moon icon">
+				<img src="./images/icon-moon.svg" class="header-area__btn--icon" alt="moon icon">
 			</button>
 		</div>
 	</header>
@@ -29,7 +30,7 @@
 				<label for="create_task" class="input-container__label">Create a new todo</label>
 			</div>
 			<ul class="task-container">
-				<li class="task">
+				<!-- <li class="task">
 					<label for="" class="task__textarea">
 						<span class="task-container__textarea--span"></span>
 						<input type="checkbox" class="task-container__textarea--input">
@@ -37,13 +38,36 @@
 					</label>
 					<button class="task__delete"><img src="./images/icon-cross.svg" alt="Delete task icon"
 							class="task__delete--x-img"></button>
-				</li>
+				</li> -->
+
+				<div class="empty-state">
+					<h2 class="empty-state__heading">Please create new task</h2>
+					<div class="empty-state__option">
+						<span class="empty-state__option--span"></span>
+						<p class="empty-state__option--text">Select circle to mark task as completed</p>
+					</div>
+					<div class="empty-state__option">
+						<img src="./images/icon-cross.svg" alt="Delete task icon" class="empty-state__option--x-img">
+						<p class="empty-state__option--text">Select cross sign to delete task</p>
+					</div>
+				</div>
 
 
 
-
+				<div class="button-container">
+					<div class="button-container__tasks">
+						<p class="button-container__tasks--text">items left</p>
+					</div>
+					<div class="button-container__state-btns">
+						<button class="button-container__state-btns--btn" data-status="all">All</button>
+						<button class="button-container__state-btns--btn" data-status="active">Active</button>
+						<button class="button-container__state-btns--btn" data-status="completed">Completed</button>
+					</div>
+					<div class="button-container__clear-btn">
+						<button class="button-container__clear-btn--btn" data-status="clear">Clear completed</button>
+					</div>
+				</div>
 			</ul>
-
 		</section>
 	</main>
 	<footer>
