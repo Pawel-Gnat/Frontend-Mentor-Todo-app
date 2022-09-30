@@ -21,6 +21,7 @@ html {
 body {
   font-family: 'Josefin Sans', sans-serif;
   min-height: 100vh;
+  background-color: #fafafa;
 }
 
 /* HEADER */
@@ -79,12 +80,18 @@ main {
       -ms-flex-align: center;
           align-items: center;
   padding: 0 2.5rem;
-  background-color: #e4e5f1;
 }
 
 /* SECTION */
 .to-do-app {
   width: 100%;
+}
+
+.to-do-app__text {
+  position: relative;
+  top: -3rem;
+  color: #9394a5;
+  text-align: center;
 }
 
 .input-container {
@@ -103,16 +110,17 @@ main {
   background-color: #fafafa;
 }
 
-.input-container__span {
+.input-container__btn {
   height: 2rem;
-  min-width: 2rem;
+  width: 2rem;
   border-radius: 50%;
   border: 1px solid #d2d3db;
+  background-color: transparent;
 }
 
 .input-container__input {
   font-family: 'Josefin Sans', sans-serif;
-  min-width: 20rem;
+  min-width: 17rem;
   padding-left: 0.5rem;
   margin-left: 1rem;
   border-radius: 0.5rem;
@@ -150,6 +158,43 @@ main {
   top: -7.5rem;
   border-radius: 0.5rem;
   background-color: #fafafa;
+  -webkit-box-shadow: 0px 5px 30px -20px #42445a;
+          box-shadow: 0px 5px 30px -20px #42445a;
+}
+
+.task {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 5rem;
+  padding: 0 2.5rem;
+  border-bottom: 1px solid #e4e5f1;
+}
+
+.task__delete {
+  font-family: 'Josefin Sans', sans-serif;
+  padding: 1rem;
+  border: none;
+  background-color: transparent;
+  color: #9394a5;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  cursor: pointer;
+  padding: 1rem 0;
+}
+
+.task__delete--img {
+  display: block;
 }
 
 .empty-state {
@@ -182,15 +227,95 @@ main {
   margin: 1rem;
 }
 
-.empty-state__option--span {
+.empty-state__option--btn {
   height: 2rem;
-  min-width: 2rem;
+  width: 2rem;
   border-radius: 50%;
   border: 1px solid #d2d3db;
+  background-color: transparent;
 }
 
 .button-container {
-  border-top: 1px solid #d2d3db;
+  font-size: 1.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-height: 5rem;
+  padding: 0 2.5rem;
+  border-top: 1px solid #e4e5f1;
+}
+
+.button-container__text {
+  color: #9394a5;
+}
+
+.button-container__state-btns {
+  display: none;
+}
+
+.button-container__state-btns--btn {
+  font-family: 'Josefin Sans', sans-serif;
+  padding: 1rem;
+  border: none;
+  background-color: transparent;
+  color: #9394a5;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.button-container__clear-btn--btn {
+  font-family: 'Josefin Sans', sans-serif;
+  padding: 1rem;
+  border: none;
+  background-color: transparent;
+  color: #9394a5;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  padding: 1rem 0;
+}
+
+.button-container:nth-child(3) {
+  position: relative;
+  top: -6rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-top: none;
+  border-radius: 0.5rem;
+  background-color: #fafafa;
+  -webkit-box-shadow: 0px 5px 30px -20px #42445a;
+          box-shadow: 0px 5px 30px -20px #42445a;
+}
+
+.button-container__btn {
+  font-family: 'Josefin Sans', sans-serif;
+  padding: 1rem;
+  border: none;
+  background-color: transparent;
+  color: #9394a5;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.active-btn {
+  color: #3a7bfd;
 }
 
 /* FOOTER */
