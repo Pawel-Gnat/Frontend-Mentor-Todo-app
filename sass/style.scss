@@ -24,6 +24,7 @@ body {
 	font-family: 'Josefin Sans', sans-serif;
 	min-height: 100vh;
 	background-color: $very-light-gray;
+	color: $very-dark-grayish-blue_light;
 }
 
 /* HEADER */
@@ -90,17 +91,17 @@ main {
 	flex-direction: row;
 	top: -9rem;
 	height: 5rem;
-	padding: 1.5rem 2rem;
+	padding: 1.5rem 2.5rem;
 	border-radius: 0.5rem;
 	background-color: $very-light-gray;
 
-	&__btn {
+	&__circle {
 		@include btn-circle;
 	}
 
 	&__input {
 		font-family: 'Josefin Sans', sans-serif;
-		min-width: 17rem;
+		min-width: 17.5rem;
 		padding-left: 0.5rem;
 		margin-left: 1rem;
 		border-radius: 0.5rem;
@@ -119,6 +120,7 @@ main {
 
 	&__label {
 		visibility: hidden;
+		width: 1rem;
 	}
 }
 
@@ -131,36 +133,66 @@ main {
 }
 
 .task {
-	// display: block;
+	font-size: $general-text-size;
 	display: flex;
 	flex-direction: row;
-	// justify-content: center;
 	justify-content: space-between;
 	align-items: center;
+	gap: 1.5rem;
 	min-height: 5rem;
 	padding: 0 2.5rem;
 	border-bottom: 1px solid $very-light-grayish-blue;
 
-	&__taskarea {
-		// display: block;
-		// min-height: 5rem;
+	&__circle {
+		@include btn-circle;
+		flex: 0 0 auto;
+		transition: background-image 1s;
+	}
+
+	&__input {
+		position: absolute;
+		left: 2.5rem;
+		height: 2rem;
+		width: 2rem;
+		opacity: 0;
+	}
+
+	&__textarea {
+		flex: 1 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		min-width: 20rem;
+		max-width: 100%;
+		padding: 1.5rem 0;
 	}
 
 	&__delete {
 		@include btn;
+		flex: 0 0 auto;
 		padding: 1rem 0;
-		// align-self: flex-end;
-		// justify-self: flex-end;
-		&--img {
+
+		&--x-img {
 			display: block;
+			height: 1.4rem;
+			width: 1.4rem;
 		}
 	}
 }
 
+.task__input:hover + .task__circle {
+	border: 1px solid transparent;
+	background-image: linear-gradient($very-light-gray, $very-light-gray),
+		linear-gradient(to right bottom, $check-background1, $check-background2);
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+}
+
 .empty-state {
-	padding: 5rem 2rem;
+	padding: 5rem 0rem;
 	color: $dark-grayish-blue_light;
 	text-align: center;
+	border-bottom: 1px solid $very-light-grayish-blue;
 
 	&__heading {
 		font-size: $heading-text-size;
@@ -176,8 +208,14 @@ main {
 		justify-content: center;
 		margin: 1rem;
 
-		&--btn {
+		&--circle {
 			@include btn-circle;
+		}
+
+		&--x-img {
+			display: block;
+			height: 1.4rem;
+			width: 1.4rem;
 		}
 	}
 }
@@ -190,7 +228,6 @@ main {
 	justify-content: space-between;
 	min-height: 5rem;
 	padding: 0 2.5rem;
-	border-top: 1px solid $very-light-grayish-blue;
 
 	&__text {
 		color: $dark-grayish-blue_light;
