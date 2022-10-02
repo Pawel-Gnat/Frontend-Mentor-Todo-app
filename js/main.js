@@ -2,9 +2,10 @@
 
 const toDoList = document.querySelector('.task-container')
 const createNewTaskInput = document.querySelector('.input-container__input')
+const inputError = document.querySelector('.input-error')
 
 const tasks = document.getElementsByClassName('task')
-const btn = document.querySelector('button')
+const emptyStateContainer = document.getElementsByClassName('empty-state')
 
 let taskId = 0
 let inputId = 0
@@ -16,7 +17,7 @@ function emptyState() {
 		<h2 class="empty-state__heading">Please create new task</h2>
 		<div class="empty-state__option">
 			<span class="empty-state__option--circle"></span>
-			<p class="empty-state__option--text">Select circle to mark task as completed</p>
+			<p class="empty-state__option--text">Select circle or text to mark task as completed</p>
 		</div>
 		<div class="empty-state__option">
 			<img src="./images/icon-cross.svg" alt="Delete task icon" class="empty-state__option--x-img">
@@ -26,12 +27,11 @@ function emptyState() {
 	return emptyState
 }
 
-// function handleState() {
-// 	if (!toDoList.contains(btn)) {
-// 		toDoList.insertBefore(emptyState(), toDoList.firstChild)
-// 	}
-// }
-// handleState()
+function handleState() {
+	if (tasks.length === 0) {
+		toDoList.insertBefore(emptyState(), toDoList.firstChild)
+	}
+}
 
 const createNewTask = () => {
 	if (createNewTaskInput.value !== '') {
@@ -51,15 +51,49 @@ const createNewTask = () => {
 
 		toDoList.insertBefore(newTask, toDoList.firstChild)
 	} else {
-		console.log('error')
+		if (!inputError.classList.contains('input-error-display')) {
+			inputError.classList.add('input-error-display')
+
+			setTimeout(() => {
+				inputError.classList.add('input-error-hide')
+			}, 2000)
+
+			setTimeout(() => {
+				inputError.classList.remove('input-error-display')
+				inputError.classList.remove('input-error-hide')
+			}, 2500)
+		}
 	}
 }
 
 const displayNewTask = event => {
 	if (event.key == 'Enter') {
 		createNewTask()
+
+		if (createNewTaskInput.value !== '') {
+			if (tasks.length === 1) {
+				emptyStateContainer[0].remove()
+			}
+		}
 		createNewTaskInput.value = ''
-		// handleState()
 	}
 }
+
+const handleTask = e => {
+	if (e.target.closest('button')) {
+		deleteTask(e)
+
+		if (tasks.length === 0) {
+			toDoList.insertBefore(emptyState(), toDoList.firstChild)
+		}
+	}
+}
+
+function deleteTask(e) {
+	const deleteSelectedTask = e.target.closest('li')
+	deleteSelectedTask.remove()
+}
+
 createNewTaskInput.addEventListener('keyup', displayNewTask)
+toDoList.addEventListener('click', handleTask)
+handleState()

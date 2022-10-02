@@ -1,6 +1,7 @@
 /* VARIABLES */
 @import './colors';
 @import './mixins';
+@import './animations';
 
 $heading-text-size: 1.4rem;
 $general-text-size: 1.2rem;
@@ -63,33 +64,27 @@ body {
 	}
 }
 
-/* MAIN */
-
-main {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 0 2.5rem;
-}
-
 /* SECTION */
 
 .to-do-app {
-	width: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 1.7rem;
+	top: -9rem;
+	padding: 0 2.5rem;
 
 	&__text {
-		position: relative;
-		top: -3rem;
+		font-size: $heading-text-size;
+		margin-top: 1.8rem;
 		color: $dark-grayish-blue_light;
 		text-align: center;
 	}
 }
 
 .input-container {
-	position: relative;
 	display: flex;
 	flex-direction: row;
-	top: -9rem;
 	height: 5rem;
 	padding: 1.5rem 2.5rem;
 	border-radius: 0.5rem;
@@ -101,7 +96,7 @@ main {
 
 	&__input {
 		font-family: 'Josefin Sans', sans-serif;
-		min-width: 17.5rem;
+		min-width: 80%;
 		padding-left: 0.5rem;
 		margin-left: 1rem;
 		border-radius: 0.5rem;
@@ -125,8 +120,6 @@ main {
 }
 
 .task-container {
-	position: relative;
-	top: -7.5rem;
 	border-radius: 0.5rem;
 	background-color: $very-light-gray;
 	box-shadow: 0px 5px 30px -20px rgba(66, 68, 90, 1);
@@ -134,13 +127,12 @@ main {
 
 .task {
 	font-size: $general-text-size;
+	position: relative;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	align-items: center;
-	gap: 1.5rem;
 	min-height: 5rem;
-	padding: 0 2.5rem;
+	padding: 0 1.5rem 0 2.5rem;
 	border-bottom: 1px solid $very-light-grayish-blue;
 
 	&__circle {
@@ -155,22 +147,24 @@ main {
 		height: 2rem;
 		width: 2rem;
 		opacity: 0;
+		cursor: pointer;
 	}
 
 	&__textarea {
-		flex: 1 0 auto;
+		flex: 1 0 1;
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		min-width: 20rem;
-		max-width: 100%;
+		width: 100%;
 		padding: 1.5rem 0;
+		margin-left: 1.5rem;
+		overflow-wrap: break-word;
+		word-break: break-all;
+		cursor: pointer;
 	}
 
 	&__delete {
 		@include btn;
 		flex: 0 0 auto;
-		padding: 1rem 0;
 
 		&--x-img {
 			display: block;
@@ -220,7 +214,8 @@ main {
 	}
 }
 
-.button-container {
+.button-container,
+.button-container2 {
 	font-size: $general-text-size;
 	display: flex;
 	flex-direction: row;
@@ -252,23 +247,47 @@ main {
 	}
 }
 
-.button-container:nth-child(3) {
-	position: relative;
-	top: -6rem;
+.button-container2 {
 	justify-content: center;
 	border-top: none;
 	border-radius: 0.5rem;
 	background-color: $very-light-gray;
 	box-shadow: 0px 5px 30px -20px rgba(66, 68, 90, 1);
-}
 
-.button-container__btn {
-	@include btn;
-	font-weight: 700;
+	&__btn {
+		@include btn;
+		font-weight: 700;
+	}
 }
 
 .active-btn {
 	color: $bright-blue;
+}
+
+/* INPUT ERROR */
+
+.input-error {
+	font-size: $heading-text-size;
+	position: absolute;
+	top: -5rem;
+	left: 50%;
+	translate: -50%;
+	border-radius: 0.5rem;
+	background-color: rgba($color: red, $alpha: 0.8);
+	text-align: center;
+
+	&__text {
+		padding: 1rem;
+		color: #fff;
+	}
+}
+
+.input-error-display {
+	animation: 0.5s forwards displayError;
+}
+
+.input-error-hide {
+	animation: 0.5s forwards hideError;
 }
 
 /* FOOTER */
