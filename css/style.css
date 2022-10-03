@@ -37,6 +37,42 @@
   }
 }
 
+@-webkit-keyframes displayTask {
+  from {
+    top: -20rem;
+  }
+  to {
+    top: 0;
+  }
+}
+
+@keyframes displayTask {
+  from {
+    top: -20rem;
+  }
+  to {
+    top: 0;
+  }
+}
+
+@-webkit-keyframes removeTask {
+  from {
+    left: 0;
+  }
+  to {
+    left: 80rem;
+  }
+}
+
+@keyframes removeTask {
+  from {
+    left: 0;
+  }
+  to {
+    left: 80rem;
+  }
+}
+
 /* SITE */
 *,
 *::after,
@@ -188,6 +224,7 @@ body {
   background-color: #fafafa;
   -webkit-box-shadow: 0px 5px 30px -20px #42445a;
           box-shadow: 0px 5px 30px -20px #42445a;
+  overflow: hidden;
 }
 
 .task {
@@ -203,9 +240,10 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  min-height: 5rem;
   padding: 0 1.5rem 0 2.5rem;
   border-bottom: 1px solid #e4e5f1;
+  -webkit-animation: 0.5s forwards displayTask;
+          animation: 0.5s forwards displayTask;
 }
 
 .task__circle {
@@ -217,8 +255,17 @@ body {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
-  -webkit-transition: background-image 1s;
-  transition: background-image 1s;
+}
+
+.task__circle--icon {
+  display: none;
+  position: relative;
+  height: 1rem;
+  width: 1rem;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 50%);
+          transform: translate(-50%, 50%);
 }
 
 .task__input {
@@ -241,7 +288,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  padding: 1.5rem 0;
+  padding: 1.7rem 0;
   margin-left: 1.5rem;
   overflow-wrap: break-word;
   word-break: break-all;
@@ -266,6 +313,27 @@ body {
   display: block;
   height: 1.4rem;
   width: 1.4rem;
+}
+
+.task-completed-text {
+  -webkit-text-decoration: line-through #9394a5;
+          text-decoration: line-through #9394a5;
+  color: #d2d3db;
+}
+
+.task-completed-circle {
+  background: -webkit-gradient(linear, left top, right bottom, from(#57ddff), to(#c058f3));
+  background: linear-gradient(to right bottom, #57ddff, #c058f3);
+  border: none;
+}
+
+.task-completed-circle > .task__circle--icon {
+  display: block;
+}
+
+.task-remove {
+  -webkit-animation: 0.4s forwards removeTask;
+          animation: 0.4s forwards removeTask;
 }
 
 .task__input:hover + .task__circle {

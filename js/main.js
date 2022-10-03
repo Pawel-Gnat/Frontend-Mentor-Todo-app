@@ -1,8 +1,9 @@
 'use strict'
 
-const toDoList = document.querySelector('.task-container')
+const toDoList = document.querySelector('.tasks-box')
 const createNewTaskInput = document.querySelector('.input-container__input')
 const inputError = document.querySelector('.input-error')
+const currentTasksNumber = document.querySelector('.button-container__text')
 
 const tasks = document.getElementsByClassName('task')
 const emptyStateContainer = document.getElementsByClassName('empty-state')
@@ -28,9 +29,11 @@ function emptyState() {
 }
 
 function handleState() {
-	if (tasks.length === 0) {
-		toDoList.insertBefore(emptyState(), toDoList.firstChild)
-	}
+	setTimeout(() => {
+		if (tasks.length === 0) {
+			toDoList.insertBefore(emptyState(), toDoList.firstChild)
+		}
+	}, 400)
 }
 
 const createNewTask = () => {
@@ -44,7 +47,7 @@ const createNewTask = () => {
 
 		newTask.innerHTML = `
 		<input id="${inputId}" type="checkbox" class="task__input">
-		<span class="task__circle"></span>
+		<span class="task__circle"><img src="./images/icon-check.svg" alt="" class="task__circle--icon" aria-hidden="true"></span>
 		<label for="${inputId}" class="task__textarea">${taskDescription}</label>
 		<button class="task__delete"><img src="./images/icon-cross.svg" alt="Delete task icon" class="task__delete--x-img"></button>
 		`
@@ -76,24 +79,62 @@ const displayNewTask = event => {
 			}
 		}
 		createNewTaskInput.value = ''
+		countTasks()
 	}
 }
 
 const handleTask = e => {
 	if (e.target.closest('button')) {
 		deleteTask(e)
+		handleState()
+	}
 
-		if (tasks.length === 0) {
-			toDoList.insertBefore(emptyState(), toDoList.firstChild)
-		}
+	if (e.target.closest('input')) {
+		setTaskAsCompleted(e)
+		countTasks()
 	}
 }
 
 function deleteTask(e) {
-	const deleteSelectedTask = e.target.closest('li')
-	deleteSelectedTask.remove()
+	let deleteSelectedTask = e.target.closest('li')
+	deleteSelectedTask.classList.add('task-remove')
+
+	setTimeout(() => {
+		deleteSelectedTask.remove()
+		countTasks()
+	}, 400)
+}
+
+function setTaskAsCompleted(e) {
+	const completeTask = e.target.closest('li')
+	const completeTaskImg = completeTask.getElementsByTagName('span')[0]
+
+	completeTask.classList.toggle('task-completed-text')
+	completeTaskImg.classList.toggle('task-completed-circle')
+}
+
+function countTasks() {
+	let tasksArray = [...tasks]
+	let activeArray = []
+
+	if (tasks.length > 0) {
+		activeArray = tasksArray.filter(task => {
+			return !task.classList.contains('task-completed-text')
+		})
+	}
+
+	currentTasksNumber.textContent = `${activeArray.length} items left`
 }
 
 createNewTaskInput.addEventListener('keyup', displayNewTask)
 toDoList.addEventListener('click', handleTask)
 handleState()
+countTasks()
+
+// media queries
+// clear completed btn
+// input animacja od gory
+// local storage
+// all active completed btny
+// drag and drop
+// color switcher
