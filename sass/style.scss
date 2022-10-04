@@ -83,12 +83,15 @@ body {
 }
 
 .input-container {
+	position: relative;
 	display: flex;
 	flex-direction: row;
+	top: -20rem;
 	height: 5rem;
 	padding: 1.5rem 2.5rem;
 	border-radius: 0.5rem;
 	background-color: $very-light-gray;
+	animation: 1.5s linear 1s forwards displayTask;
 
 	&__circle {
 		@include btn-circle;
@@ -139,6 +142,7 @@ body {
 	&__circle {
 		@include btn-circle;
 		flex: 0 0 auto;
+		z-index: 1;
 
 		&--icon {
 			display: none;
@@ -263,6 +267,10 @@ body {
 			@include btn;
 			font-weight: 700;
 		}
+
+		&--btn:hover {
+			color: $very-dark-grayish-blue_light;
+		}
 	}
 
 	&__clear-btn {
@@ -271,6 +279,10 @@ body {
 			text-transform: capitalize;
 			font-size: $general-text-size;
 			padding: 1rem 0;
+		}
+
+		&--btn:hover {
+			color: $very-dark-grayish-blue_light;
 		}
 	}
 }
@@ -285,6 +297,10 @@ body {
 	&__btn {
 		@include btn;
 		font-weight: 700;
+	}
+
+	&__btn:hover {
+		color: $very-dark-grayish-blue_light;
 	}
 }
 

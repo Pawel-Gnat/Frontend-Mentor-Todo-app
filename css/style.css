@@ -162,6 +162,7 @@ body {
 }
 
 .input-container {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -169,10 +170,13 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  top: -20rem;
   height: 5rem;
   padding: 1.5rem 2.5rem;
   border-radius: 0.5rem;
   background-color: #fafafa;
+  -webkit-animation: 1.5s 1s forwards displayTask;
+          animation: 1.5s 1s forwards displayTask;
 }
 
 .input-container__circle {
@@ -255,6 +259,7 @@ body {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
+  z-index: 1;
 }
 
 .task__circle--icon {
@@ -432,6 +437,11 @@ body {
   font-weight: 700;
 }
 
+.button-container__state-btns--btn:hover,
+.button-container2__state-btns--btn:hover {
+  color: #484b6a;
+}
+
 .button-container__clear-btn--btn,
 .button-container2__clear-btn--btn {
   font-family: 'Josefin Sans', sans-serif;
@@ -445,6 +455,11 @@ body {
   text-transform: capitalize;
   font-size: 1.2rem;
   padding: 1rem 0;
+}
+
+.button-container__clear-btn--btn:hover,
+.button-container2__clear-btn--btn:hover {
+  color: #484b6a;
 }
 
 .button-container2 {
@@ -468,6 +483,10 @@ body {
   transition: color 0.3s;
   cursor: pointer;
   font-weight: 700;
+}
+
+.button-container2__btn:hover {
+  color: #484b6a;
 }
 
 .active-btn {

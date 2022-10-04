@@ -4,6 +4,7 @@ const toDoList = document.querySelector('.tasks-box')
 const createNewTaskInput = document.querySelector('.input-container__input')
 const inputError = document.querySelector('.input-error')
 const currentTasksNumber = document.querySelector('.button-container__text')
+const clearCompletedTasksBtn = document.querySelector('.button-container__clear-btn--btn')
 
 const tasks = document.getElementsByClassName('task')
 const emptyStateContainer = document.getElementsByClassName('empty-state')
@@ -37,7 +38,10 @@ function handleState() {
 }
 
 const createNewTask = () => {
-	if (createNewTaskInput.value !== '') {
+	let emptyspace = /\s/
+	let inputValue = createNewTaskInput.value
+
+	if (!inputValue.match(emptyspace) && inputValue !== '') {
 		taskId++
 		inputId++
 		let newTask = document.createElement('li')
@@ -118,23 +122,42 @@ function countTasks() {
 	let activeArray = []
 
 	if (tasks.length > 0) {
-		activeArray = tasksArray.filter(task => {
-			return !task.classList.contains('task-completed-text')
-		})
+		activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
 	}
 
-	currentTasksNumber.textContent = `${activeArray.length} items left`
+	activeArray.length === 1
+		? (currentTasksNumber.textContent = `${activeArray.length} item left`)
+		: (currentTasksNumber.textContent = `${activeArray.length} items left`)
+}
+
+function deleteCompletedTasks() {
+	let tasksArray = [...tasks]
+	let completedArray = []
+
+	if (tasks.length > 0) {
+		completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
+	}
+
+	completedArray.forEach(task => {
+		task.classList.add('task-remove')
+
+		setTimeout(() => {
+			task.remove()
+		}, 400)
+	})
 }
 
 createNewTaskInput.addEventListener('keyup', displayNewTask)
 toDoList.addEventListener('click', handleTask)
+clearCompletedTasksBtn.addEventListener('click', deleteCompletedTasks)
 handleState()
 countTasks()
 
+// completed btn image and gradient
 // media queries
-// clear completed btn
-// input animacja od gory
 // local storage
 // all active completed btny
 // drag and drop
 // color switcher
+// active state na buttonach dolnych
+// type module js
