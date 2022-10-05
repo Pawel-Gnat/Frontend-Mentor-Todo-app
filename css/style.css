@@ -99,13 +99,13 @@ body {
 /* HEADER */
 .header {
   height: 20rem;
-  padding: 4rem 2.5rem 0;
-  background: url(../images/bg-desktop-light.jpg) center no-repeat;
+  padding-top: 4rem;
+  background: url(../images/bg-mobile-light.jpg) center no-repeat;
   background-size: cover;
 }
 
 .header-area {
-  font-size: 1.4rem;
+  font-size: clamp(1.4rem, 1vw, 3rem);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -115,6 +115,9 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  max-width: 54rem;
+  padding: 0 2.5rem;
+  margin: 0 auto;
 }
 
 .header-area__heading {
@@ -151,7 +154,9 @@ body {
           flex-direction: column;
   gap: 1.7rem;
   top: -9rem;
+  max-width: 54rem;
   padding: 0 2.5rem;
+  margin: 0 auto;
 }
 
 .to-do-app__text {
@@ -175,8 +180,8 @@ body {
   padding: 1.5rem 2.5rem;
   border-radius: 0.5rem;
   background-color: #fafafa;
-  -webkit-animation: 1.5s 1s forwards displayTask;
-          animation: 1.5s 1s forwards displayTask;
+  -webkit-animation: 1.5s linear 1s forwards displayTask;
+          animation: 1.5s linear 1s forwards displayTask;
 }
 
 .input-container__circle {
@@ -203,18 +208,22 @@ body {
 }
 
 .input-container__input::-webkit-input-placeholder {
+  font-size: 1.4rem;
   color: #484b6a;
 }
 
 .input-container__input:-ms-input-placeholder {
+  font-size: 1.4rem;
   color: #484b6a;
 }
 
 .input-container__input::-ms-input-placeholder {
+  font-size: 1.4rem;
   color: #484b6a;
 }
 
 .input-container__input::placeholder {
+  font-size: 1.4rem;
   color: #484b6a;
 }
 
@@ -232,7 +241,7 @@ body {
 }
 
 .task {
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -357,12 +366,11 @@ body {
 }
 
 .empty-state__heading {
-  font-size: 1.4rem;
   margin-bottom: 3rem;
 }
 
 .empty-state__option {
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1vw, 1.4rem);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -396,7 +404,7 @@ body {
 
 .button-container,
 .button-container2 {
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1vw, 1.4rem);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -453,7 +461,7 @@ body {
   transition: color 0.3s;
   cursor: pointer;
   text-transform: capitalize;
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1vw, 1.4rem);
   padding: 1rem 0;
 }
 
@@ -495,7 +503,7 @@ body {
 
 /* INPUT ERROR */
 .input-error {
-  font-size: 1.4rem;
+  font-size: clamp(1.4rem, 1vw, 3rem);
   position: absolute;
   top: -5rem;
   left: 50%;
@@ -522,8 +530,22 @@ body {
 
 /* FOOTER */
 footer {
+  position: relative;
+  top: -7rem;
   text-align: center;
 }
 
 /* MEDIA QUERIES */
+@media (min-width: 500px) {
+  .header {
+    background: url(../images/bg-desktop-light.jpg) center no-repeat;
+    background-size: cover;
+  }
+  .button-container__state-btns {
+    display: block;
+  }
+  .button-container2 {
+    display: none;
+  }
+}
 /*# sourceMappingURL=style.css.map */
