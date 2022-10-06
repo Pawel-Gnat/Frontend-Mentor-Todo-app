@@ -64,7 +64,58 @@ const createNewTask = () => {
 
 		toDoList.insertBefore(newTask, toDoList.firstChild)
 	} else {
+		// if (!inputError.classList.contains('input-error-display')) {
+		// 	inputError.classList.add('input-error-display')
+		// 	setTimeout(() => {
+		// 		inputError.classList.add('input-error-hide')
+		// 	}, 2000)
+		// 	setTimeout(() => {
+		// 		inputError.classList.remove('input-error-display')
+		// 		inputError.classList.remove('input-error-hide')
+		// 	}, 2500)
+		// }
+
+		// displayError(`Please enter the content of the task`)
+		// throw new Error('Please enter the content of the task')
+
+		const error = new Error('Please enter the content of the task')
+		// error.show()
+	}
+}
+
+// function displayError(text) {
+// 	const textError = document.querySelector('input-error__text')
+
+// 	if (!inputError.classList.contains('input-error-display')) {
+// 		textError.textContent = `${text}`
+
+// 		inputError.classList.add('input-error-display')
+
+// 		setTimeout(() => {
+// 			inputError.classList.add('input-error-hide')
+// 		}, 2000)
+
+// 		setTimeout(() => {
+// 			inputError.classList.remove('input-error-display')
+// 			inputError.classList.remove('input-error-hide')
+// 		}, 2500)
+// 	}
+// }
+
+class Error {
+	constructor(msg) {
+		this.msg = msg
+	}
+
+	get show() {
+		return this.showError()
+	}
+
+	showError() {
+		const textError = document.querySelector('.input-error__text')
+
 		if (!inputError.classList.contains('input-error-display')) {
+			textError.textContent = `${this.msg}`
 			inputError.classList.add('input-error-display')
 
 			setTimeout(() => {
@@ -74,6 +125,7 @@ const createNewTask = () => {
 			setTimeout(() => {
 				inputError.classList.remove('input-error-display')
 				inputError.classList.remove('input-error-hide')
+				textError.textContent = ''
 			}, 2500)
 		}
 	}
@@ -156,6 +208,7 @@ function deleteCompletedTasks() {
 
 		setTimeout(() => {
 			task.remove()
+			handleState()
 		}, 400)
 	})
 }
@@ -167,9 +220,47 @@ function deleteCompletedTasks() {
 // 	}
 // }
 
+// // const handleBtns = e => {
+// 	e.preventDefault()
+
+// 	const activeBtnClass = document.querySelector('.active-btn')
+
+// 	if (activeBtnClass) {
+// 		activeBtnClass.classList.remove('active-btn')
+// 	}
+
+// 	// e.currentTarget.classList.add('active-btn')
+
+// 	if (e.target.dataset.status == 'clear') {
+// 		deleteCompletedTasks()
+// 	// } else {
+// 	// 	e.currentTarget.classList.add('active-btn')
+// 	// }
+// }
+
 taskButtons.forEach(btn => {
+	// console.log(taskButtons);
+	// btn.classList.remove('active-btn')
 	// action on my task buttons
+
+	// if (btn.dataset.status == 'all') {
+	// 	btn.classList.add('active-btn')
+	// }
+
+	// btn.addEventListener('click', handleBtns)
+
 	btn.addEventListener('click', () => {
+		// if (btn.classList.contains('active-btn')) {
+		// 	btn.classList.remove('active-btn')
+		// }
+		// console.log(btn);
+
+		const activeBtnClass = document.querySelector('.active-btn')
+
+		if (activeBtnClass) {
+			activeBtnClass.classList.remove('active-btn')
+		}
+
 		if (btn.dataset.status == 'all') {
 			btn.classList.add('active-btn')
 		}
@@ -184,7 +275,6 @@ taskButtons.forEach(btn => {
 
 		if (btn.dataset.status == 'clear') {
 			deleteCompletedTasks()
-			handleState()
 		}
 	})
 })
