@@ -37,3 +37,13 @@
 		left: 80rem;
 	}
 }
+
+@keyframes displayImg {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}

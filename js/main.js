@@ -1,8 +1,10 @@
 'use strict'
 
+import changeTheme from './theme.js'
+
 const toDoList = document.querySelector('.tasks-box')
 const createNewTaskInput = document.querySelector('.input-container__input')
-const inputError = document.querySelector('.input-error')
+const showError = document.querySelector('.error')
 
 const taskButtons = [
 	...document.querySelectorAll('.button-container button'),
@@ -14,6 +16,10 @@ const emptyStateContainer = document.getElementsByClassName('empty-state')
 
 let taskId = 0
 let inputId = 0
+let arrayStorageOfTasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [] // my locally storaged tasks
+
+localStorage.setItem('tasks', JSON.stringify(arrayStorageOfTasks))
+const data = JSON.parse(localStorage.getItem('tasks')) // fetched tasks from local storage
 
 function emptyState() {
 	// display instructions how to use and application if there are no tasks created
@@ -22,14 +28,14 @@ function emptyState() {
 	emptyState.innerHTML = `
 		<h2 class="empty-state__heading">Please create a new task</h2>
 		<div class="empty-state__option">
-			<span class="empty-state__option--circle"></span>
-			<p class="empty-state__option--text">Select circle or text to mark task as completed</p>
+		<span class="empty-state__option--circle"></span>
+		<p class="empty-state__option--text">Select circle or text to mark task as completed</p>
 		</div>
 		<div class="empty-state__option">
-			<img src="./images/icon-cross.svg" alt="Delete task icon" class="empty-state__option--x-img">
+		<img src="./images/icon-cross.svg" alt="Delete task icon" class="empty-state__option--x-img">
 			<p class="empty-state__option--text">Select cross sign to delete task</p>
-		</div>
-	`
+			</div>
+			`
 	return emptyState
 }
 
@@ -42,89 +48,51 @@ function handleState() {
 	}, 400)
 }
 
-const createNewTask = () => {
+const createNewTask = text => {
 	// function creates a new task
-	let emptyspace = /^\s*$/
-	let inputValue = createNewTaskInput.value
+	taskId++
+	inputId++
+	let newTask = document.createElement('li')
+	newTask.className = 'task'
+	newTask.dataset.id = taskId
 
-	if (!inputValue.match(emptyspace) && inputValue !== '') {
-		taskId++
-		inputId++
-		let newTask = document.createElement('li')
-		newTask.className = 'task'
-		newTask.dataset.id = taskId
-		let taskDescription = createNewTaskInput.value
+	newTask.innerHTML = `
+	<input id="${inputId}" type="checkbox" class="task__input">
+	<span class="task__circle"><img src="./images/icon-check.svg" alt="" class="task__circle--icon" aria-hidden="true"></span>
+	<label for="${inputId}" class="task__textarea">${text}</label>
+	<button class="task__delete"><img src="./images/icon-cross.svg" alt="Delete task icon" class="task__delete--x-img"></button>
+	`
 
-		newTask.innerHTML = `
-		<input id="${inputId}" type="checkbox" class="task__input">
-		<span class="task__circle"><img src="./images/icon-check.svg" alt="" class="task__circle--icon" aria-hidden="true"></span>
-		<label for="${inputId}" class="task__textarea">${taskDescription}</label>
-		<button class="task__delete"><img src="./images/icon-cross.svg" alt="Delete task icon" class="task__delete--x-img"></button>
-		`
+	toDoList.insertBefore(newTask, toDoList.firstChild)
 
-		toDoList.insertBefore(newTask, toDoList.firstChild)
-	} else {
-		// if (!inputError.classList.contains('input-error-display')) {
-		// 	inputError.classList.add('input-error-display')
-		// 	setTimeout(() => {
-		// 		inputError.classList.add('input-error-hide')
-		// 	}, 2000)
-		// 	setTimeout(() => {
-		// 		inputError.classList.remove('input-error-display')
-		// 		inputError.classList.remove('input-error-hide')
-		// 	}, 2500)
-		// }
-
-		// displayError(`Please enter the content of the task`)
-		// throw new Error('Please enter the content of the task')
-
-		const error = new Error('Please enter the content of the task')
-		// error.show()
-	}
+	arrayStorageOfTasks.push(text)
+	localStorage.setItem('tasks', JSON.stringify(arrayStorageOfTasks))
 }
 
-// function displayError(text) {
-// 	const textError = document.querySelector('input-error__text')
+data.forEach(item => {
+	// append tasks from local storage
+	createNewTask(item)
+})
 
-// 	if (!inputError.classList.contains('input-error-display')) {
-// 		textError.textContent = `${text}`
-
-// 		inputError.classList.add('input-error-display')
-
-// 		setTimeout(() => {
-// 			inputError.classList.add('input-error-hide')
-// 		}, 2000)
-
-// 		setTimeout(() => {
-// 			inputError.classList.remove('input-error-display')
-// 			inputError.classList.remove('input-error-hide')
-// 		}, 2500)
-// 	}
-// }
-
-class Error {
+class ErrorState {
 	constructor(msg) {
 		this.msg = msg
 	}
 
-	get show() {
-		return this.showError()
-	}
-
 	showError() {
-		const textError = document.querySelector('.input-error__text')
+		const textError = document.querySelector('.error__text')
 
-		if (!inputError.classList.contains('input-error-display')) {
+		if (!showError.classList.contains('error-display')) {
 			textError.textContent = `${this.msg}`
-			inputError.classList.add('input-error-display')
+			showError.classList.add('error-display')
 
 			setTimeout(() => {
-				inputError.classList.add('input-error-hide')
+				showError.classList.add('error-hide')
 			}, 2000)
 
 			setTimeout(() => {
-				inputError.classList.remove('input-error-display')
-				inputError.classList.remove('input-error-hide')
+				showError.classList.remove('error-display')
+				showError.classList.remove('error-hide')
 				textError.textContent = ''
 			}, 2500)
 		}
@@ -134,15 +102,24 @@ class Error {
 const displayNewTask = event => {
 	// funciton display a created task if input value is not empty
 	if (event.key == 'Enter') {
-		createNewTask()
+		let emptyspace = /^\s*$/
+		let inputValue = createNewTaskInput.value
 
-		if (createNewTaskInput.value !== '') {
-			if (tasks.length === 1) {
-				emptyStateContainer[0].remove()
+		if (!inputValue.match(emptyspace) && inputValue !== '') {
+			createNewTask(createNewTaskInput.value)
+
+			if (createNewTaskInput.value !== '') {
+				if (emptyStateContainer.length === 1) {
+					emptyStateContainer[0].remove()
+				}
 			}
+
+			createNewTaskInput.value = ''
+			countTasks()
+		} else {
+			const error = new ErrorState('Please enter the content of the task')
+			error.showError()
 		}
-		createNewTaskInput.value = ''
-		countTasks()
 	}
 }
 
@@ -167,6 +144,10 @@ function deleteTask(e) {
 	setTimeout(() => {
 		deleteSelectedTask.remove()
 		countTasks()
+
+		let removedTask = data.filter(tasks => tasks !== `${e.target.closest('li').children.item(2).textContent}`)
+
+		localStorage.setItem('tasks', JSON.stringify(removedTask))
 	}, 400)
 }
 
@@ -208,57 +189,37 @@ function deleteCompletedTasks() {
 
 		setTimeout(() => {
 			task.remove()
-			handleState()
 		}, 400)
+		handleState()
 	})
 }
 
-// const handleTaskButtons = e => {
-// 	if (e.target.closest('button')) {
-// 		deleteTask(e)
-// 		handleState()
-// 	}
-// }
-
-// // const handleBtns = e => {
-// 	e.preventDefault()
-
-// 	const activeBtnClass = document.querySelector('.active-btn')
-
-// 	if (activeBtnClass) {
-// 		activeBtnClass.classList.remove('active-btn')
-// 	}
-
-// 	// e.currentTarget.classList.add('active-btn')
-
-// 	if (e.target.dataset.status == 'clear') {
-// 		deleteCompletedTasks()
-// 	// } else {
-// 	// 	e.currentTarget.classList.add('active-btn')
-// 	// }
+// function highlightAllBtn() {
+// 	// set button with context "all" as active
+// 	const btnsAll = document.querySelectorAll('[data-status="all"]')
+// 	btnsAll.forEach(btn => {
+// 		btn.classList.add('active-btn')
+// 	})
 // }
 
 taskButtons.forEach(btn => {
-	// console.log(taskButtons);
-	// btn.classList.remove('active-btn')
-	// action on my task buttons
-
-	// if (btn.dataset.status == 'all') {
-	// 	btn.classList.add('active-btn')
-	// }
-
-	// btn.addEventListener('click', handleBtns)
-
 	btn.addEventListener('click', () => {
-		// if (btn.classList.contains('active-btn')) {
-		// 	btn.classList.remove('active-btn')
-		// }
-		// console.log(btn);
-
 		const activeBtnClass = document.querySelector('.active-btn')
+		let tasksArray = [...tasks]
+		let completedArray = []
+		let activeArray = []
+
+		if (tasks.length > 0) {
+			completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
+
+			activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
+		}
 
 		if (activeBtnClass) {
 			activeBtnClass.classList.remove('active-btn')
+			tasksArray.forEach(task => {
+				task.classList.remove('hide')
+			})
 		}
 
 		if (btn.dataset.status == 'all') {
@@ -266,25 +227,51 @@ taskButtons.forEach(btn => {
 		}
 
 		if (btn.dataset.status == 'active') {
-			btn.classList.add('active-btn')
+			if (activeArray.length > 0) {
+				btn.classList.add('active-btn')
+				completedArray.forEach(task => {
+					task.classList.add('hide')
+				})
+			} else {
+				const error = new ErrorState("There aren't any active tasks")
+				error.showError()
+			}
 		}
 
 		if (btn.dataset.status == 'completed') {
-			btn.classList.add('active-btn')
+			if (completedArray.length > 0) {
+				btn.classList.add('active-btn')
+				activeArray.forEach(task => {
+					task.classList.add('hide')
+				})
+			} else {
+				const error = new ErrorState("There aren't any completed tasks")
+				error.showError()
+			}
 		}
 
 		if (btn.dataset.status == 'clear') {
-			deleteCompletedTasks()
+			if (completedArray.length > 0) {
+				deleteCompletedTasks()
+			} else {
+				const error = new ErrorState('Nothing to clear')
+				error.showError()
+			}
 		}
 	})
 })
 
 createNewTaskInput.addEventListener('keyup', displayNewTask)
 toDoList.addEventListener('click', handleTask)
+// window.addEventListener('load', highlightAllBtn)
 handleState()
 countTasks()
 
 // local storage
 // drag and drop
-// color switcher
-// active state na buttonach dolnych
+
+// DRY (za duzo np. let tasksArray = [...tasks])
+// all/active/completed zle dziala jak zmieniam width apki oraz clear completed zabiera podswiedlenie na buttonach
+// na onload apki chcialbym zeby button "all" byl jako aktywny oraz podobnie po wyczyszczeniu wszystkich taskow completed
+// na telefonie nie dziala oznaczanie taska jako completed
+// local storage dubluje moje taski przy appendowaniu
