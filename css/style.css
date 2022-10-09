@@ -1,5 +1,4 @@
-/* VARIABLES */
-/* PRIMARY */
+/* VARIABLES */ /* PRIMARY */
 /* LIGHT THEME */
 /* DARK THEME */
 @-webkit-keyframes displayError {
@@ -18,7 +17,6 @@
     top: 5rem;
   }
 }
-
 @-webkit-keyframes hideError {
   from {
     top: 5rem;
@@ -27,7 +25,6 @@
     top: -5rem;
   }
 }
-
 @keyframes hideError {
   from {
     top: 5rem;
@@ -36,7 +33,6 @@
     top: -5rem;
   }
 }
-
 @-webkit-keyframes displayTask {
   from {
     top: -20rem;
@@ -45,7 +41,6 @@
     top: 0;
   }
 }
-
 @keyframes displayTask {
   from {
     top: -20rem;
@@ -54,7 +49,6 @@
     top: 0;
   }
 }
-
 @-webkit-keyframes removeTask {
   from {
     left: 0;
@@ -63,7 +57,6 @@
     left: 80rem;
   }
 }
-
 @keyframes removeTask {
   from {
     left: 0;
@@ -72,7 +65,6 @@
     left: 80rem;
   }
 }
-
 @-webkit-keyframes displayImg {
   from {
     opacity: 0;
@@ -81,7 +73,6 @@
     opacity: 1;
   }
 }
-
 @keyframes displayImg {
   from {
     opacity: 0;
@@ -90,10 +81,9 @@
     opacity: 1;
   }
 }
-
 /* ROOT THEME */
 :root,
-html[data-theme='light'] {
+html[data-theme=light] {
   --bg-body: hsl(0, 0%, 98%);
   --bg-card: hsl(0, 0%, 98%);
   --border-color: hsl(233, 11%, 84%);
@@ -106,7 +96,7 @@ html[data-theme='light'] {
   --text-placeholder: hsl(236, 9%, 61%);
 }
 
-html[data-theme='dark'] {
+html[data-theme=dark] {
   --bg-body: hsl(235, 21%, 11%);
   --bg-card: hsl(237, 14%, 26%);
   --border-color: hsl(233, 14%, 35%);
@@ -136,7 +126,7 @@ html {
 }
 
 body {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   min-height: 100vh;
   background-color: var(--bg-body);
   color: var(--text);
@@ -178,16 +168,13 @@ a {
   padding: 0 2.5rem;
   margin: 0 auto;
 }
-
 .header-area__heading {
   -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
       align-self: center;
   text-transform: uppercase;
   letter-spacing: 1rem;
-  color: #fafafa;
+  color: hsl(0deg, 0%, 98%);
 }
-
 .header-area__btn {
   position: relative;
   top: -0.5rem;
@@ -213,7 +200,6 @@ a {
   padding: 0 2.5rem;
   margin: 0 auto;
 }
-
 .to-do-app__text {
   font-size: 1.4rem;
   margin-top: 1.8rem;
@@ -242,7 +228,6 @@ a {
   -webkit-animation: 1.5s linear 1s forwards displayTask;
           animation: 1.5s linear 1s forwards displayTask;
 }
-
 .input-container__circle {
   min-height: 2rem;
   min-width: 2rem;
@@ -252,9 +237,8 @@ a {
   -webkit-transition: border-color 0.3s;
   transition: border-color 0.3s;
 }
-
 .input-container__input {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   min-width: 80%;
   padding-left: 0.5rem;
   margin-left: 1rem;
@@ -265,42 +249,42 @@ a {
   -webkit-transition: background-color 0.3s;
   transition: background-color 0.3s;
 }
-
 .input-container__input:focus {
-  border: 1px solid #d2d3db;
+  border: 1px solid hsl(233deg, 11%, 84%);
   color: var(--text-main);
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-
 .input-container__input::-webkit-input-placeholder {
   font-size: 1.4rem;
   color: var(--text-placeholder);
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-
+.input-container__input::-moz-placeholder {
+  font-size: 1.4rem;
+  color: var(--text-placeholder);
+  -moz-transition: color 0.3s;
+  transition: color 0.3s;
+}
 .input-container__input:-ms-input-placeholder {
   font-size: 1.4rem;
   color: var(--text-placeholder);
-  -webkit-transition: color 0.3s;
+  -ms-transition: color 0.3s;
   transition: color 0.3s;
 }
-
 .input-container__input::-ms-input-placeholder {
   font-size: 1.4rem;
   color: var(--text-placeholder);
-  -webkit-transition: color 0.3s;
+  -ms-transition: color 0.3s;
   transition: color 0.3s;
 }
-
 .input-container__input::placeholder {
   font-size: 1.4rem;
   color: var(--text-placeholder);
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-
 .input-container__label {
   visibility: hidden;
   width: 1rem;
@@ -309,8 +293,8 @@ a {
 .task-container {
   border-radius: 0.5rem;
   background-color: var(--bg-card);
-  -webkit-box-shadow: 0px 5px 30px -20px #42445a;
-          box-shadow: 0px 5px 30px -20px #42445a;
+  -webkit-box-shadow: 0px 5px 30px -20px rgb(66, 68, 90);
+          box-shadow: 0px 5px 30px -20px rgb(66, 68, 90);
   overflow: hidden;
   -webkit-transition: background-color 0.3s;
   transition: background-color 0.3s;
@@ -331,12 +315,12 @@ a {
           align-items: center;
   padding: 0 1.5rem 0 2.5rem;
   border-bottom: 1px solid var(--border-color);
+  cursor: move;
   -webkit-transition: border-color 0.3s;
   transition: border-color 0.3s;
   -webkit-animation: 0.5s forwards displayTask;
           animation: 0.5s forwards displayTask;
 }
-
 .task__circle {
   min-height: 2rem;
   min-width: 2rem;
@@ -350,7 +334,6 @@ a {
           flex: 0 0 auto;
   z-index: 1;
 }
-
 .task__circle--icon {
   display: none;
   position: relative;
@@ -361,7 +344,6 @@ a {
   -webkit-transform: translate(-50%, 50%);
           transform: translate(-50%, 50%);
 }
-
 .task__input {
   position: absolute;
   left: 2.5rem;
@@ -370,7 +352,6 @@ a {
   opacity: 0;
   cursor: pointer;
 }
-
 .task__textarea {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 1;
@@ -391,9 +372,8 @@ a {
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-
 .task__delete {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
   background-color: transparent;
@@ -405,7 +385,6 @@ a {
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
 }
-
 .task__delete--x-img {
   display: block;
   height: 1.4rem;
@@ -424,8 +403,8 @@ a {
 }
 
 .task-completed-circle {
-  background: -webkit-gradient(linear, left top, right bottom, from(#57ddff), to(#c058f3));
-  background: linear-gradient(to right bottom, #57ddff, #c058f3);
+  background: -webkit-gradient(linear, left top, right bottom, from(hsl(192deg, 100%, 67%)), to(hsl(280deg, 87%, 65%)));
+  background: linear-gradient(to right bottom, hsl(192deg, 100%, 67%), hsl(280deg, 87%, 65%));
   border: none;
 }
 
@@ -440,25 +419,23 @@ a {
 
 .task__input:hover + .task__circle {
   border: 1px solid transparent;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(var(--bg-card)), to(var(--bg-card))), -webkit-gradient(linear, left top, right bottom, from(#57ddff), to(#c058f3));
-  background-image: linear-gradient(var(--bg-card), var(--bg-card)), linear-gradient(to right bottom, #57ddff, #c058f3);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(var(--bg-card)), to(var(--bg-card))), -webkit-gradient(linear, left top, right bottom, from(hsl(192deg, 100%, 67%)), to(hsl(280deg, 87%, 65%)));
+  background-image: linear-gradient(var(--bg-card), var(--bg-card)), linear-gradient(to right bottom, hsl(192deg, 100%, 67%), hsl(280deg, 87%, 65%));
   background-origin: border-box;
   background-clip: content-box, border-box;
 }
 
 .empty-state {
   padding: 5rem 0rem;
-  color: #9394a5;
+  color: hsl(236deg, 9%, 61%);
   text-align: center;
   border-bottom: 1px solid var(--border-color);
   -webkit-transition: color 0.3s, border-color 0.3s;
   transition: color 0.3s, border-color 0.3s;
 }
-
 .empty-state__heading {
   margin-bottom: 3rem;
 }
-
 .empty-state__option {
   font-size: clamp(1.2rem, 1vw, 1.4rem);
   display: -webkit-box;
@@ -477,7 +454,6 @@ a {
           justify-content: center;
   margin: 1rem;
 }
-
 .empty-state__option--circle {
   min-height: 2rem;
   min-width: 2rem;
@@ -487,7 +463,6 @@ a {
   -webkit-transition: border-color 0.3s;
   transition: border-color 0.3s;
 }
-
 .empty-state__option--x-img {
   display: block;
   height: 1.4rem;
@@ -513,22 +488,19 @@ a {
   min-height: 5rem;
   padding: 0 2.5rem;
 }
-
 .button-container__text,
 .button-container2__text {
   color: var(--btn-color);
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-
 .button-container__state-btns,
 .button-container2__state-btns {
   display: none;
 }
-
 .button-container__state-btns--btn,
 .button-container2__state-btns--btn {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
   background-color: transparent;
@@ -538,15 +510,13 @@ a {
   cursor: pointer;
   font-weight: 700;
 }
-
 .button-container__state-btns--btn:hover,
 .button-container2__state-btns--btn:hover {
   color: var(--btn-hover);
 }
-
 .button-container__clear-btn--btn,
 .button-container2__clear-btn--btn {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
   background-color: transparent;
@@ -558,7 +528,6 @@ a {
   font-size: clamp(1.2rem, 1vw, 1.4rem);
   padding: 1rem 0;
 }
-
 .button-container__clear-btn--btn:hover,
 .button-container2__clear-btn--btn:hover {
   color: var(--btn-hover);
@@ -571,14 +540,13 @@ a {
   border-top: none;
   border-radius: 0.5rem;
   background-color: var(--bg-card);
-  -webkit-box-shadow: 0px 5px 30px -20px #42445a;
-          box-shadow: 0px 5px 30px -20px #42445a;
+  -webkit-box-shadow: 0px 5px 30px -20px rgb(66, 68, 90);
+          box-shadow: 0px 5px 30px -20px rgb(66, 68, 90);
   -webkit-transition: background-color 0.3s;
   transition: background-color 0.3s;
 }
-
 .button-container2__btn {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
   background-color: transparent;
@@ -588,13 +556,12 @@ a {
   cursor: pointer;
   font-weight: 700;
 }
-
 .button-container2__btn:hover {
   color: var(--btn-hover);
 }
 
 .active-btn {
-  color: #3a7bfd;
+  color: hsl(220deg, 98%, 61%);
 }
 
 .hide {
@@ -612,7 +579,6 @@ a {
   background-color: rgba(255, 0, 0, 0.8);
   text-align: center;
 }
-
 .error__text {
   padding: 1rem;
   color: #fff;
@@ -651,5 +617,4 @@ footer {
   .button-container2 {
     display: none;
   }
-}
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */

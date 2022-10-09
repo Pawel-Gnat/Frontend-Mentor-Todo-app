@@ -187,6 +187,7 @@ a {
 	align-items: center;
 	padding: 0 1.5rem 0 2.5rem;
 	border-bottom: 1px solid var(--border-color);
+	cursor: move;
 	transition: border-color 0.3s;
 	animation: 0.5s forwards displayTask;
 

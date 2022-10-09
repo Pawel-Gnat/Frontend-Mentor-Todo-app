@@ -1,6 +1,7 @@
 'use strict'
 
 import changeTheme from './theme.js'
+import * as DragAndDrop from './drag&drop.js'
 
 const toDoList = document.querySelector('.tasks-box')
 const createNewTaskInput = document.querySelector('.input-container__input')
@@ -54,6 +55,7 @@ const createNewTask = text => {
 	inputId++
 	let newTask = document.createElement('li')
 	newTask.className = 'task'
+	newTask.setAttribute('draggable', true)
 	newTask.dataset.id = taskId
 
 	newTask.innerHTML = `
@@ -194,15 +196,8 @@ function deleteCompletedTasks() {
 	})
 }
 
-// function highlightAllBtn() {
-// 	// set button with context "all" as active
-// 	const btnsAll = document.querySelectorAll('[data-status="all"]')
-// 	btnsAll.forEach(btn => {
-// 		btn.classList.add('active-btn')
-// 	})
-// }
-
 taskButtons.forEach(btn => {
+	// bottom task buttons handler (for all/active/completed)
 	btn.addEventListener('click', () => {
 		const activeBtnClass = document.querySelector('.active-btn')
 		let tasksArray = [...tasks]
@@ -261,17 +256,55 @@ taskButtons.forEach(btn => {
 	})
 })
 
+// document.addEventListener('DOMContentLoaded', e => {
+// 	// drag and drop function
+// 	let allTasks = [...document.getElementsByClassName('task')]
+
+// 	function handleDragStart(e) {
+// 		this.style.opacity = 0.4
+
+// 		e.dataTransfer.effectAllowed = 'move'
+// 		e.dataTransfer.setData('text/html', this.innerHTML)
+// 	}
+
+// 	function handleDragEnd(e) {
+// 		this.style.opacity = 1
+// 	}
+
+// 	function handleDragOver(e) {
+// 		e.preventDefault()
+// 	}
+
+// 	function handleDrop(e) {
+// 		e.preventDefault()
+// 		e.stopPropagation()
+
+// 		this.innerHTML = e.dataTransfer.getData('text/html')
+// 		e.target.append(this.innerHTML)
+// 	}
+
+// 	allTasks.forEach(task => {
+// 		task.addEventListener('dragstart', handleDragStart)
+// 		task.addEventListener('dragover', handleDragOver)
+// 		task.addEventListener('dragend', handleDragEnd)
+// 		task.addEventListener('drop', handleDrop)
+// 	})
+;[...document.getElementsByClassName('task')].forEach(task => {
+	// drag and drop function
+	task.addEventListener('dragstart', DragAndDrop.handleDragStart)
+	task.addEventListener('dragover', DragAndDrop.handleDragOver)
+	task.addEventListener('dragend', DragAndDrop.handleDragEnd)
+	task.addEventListener('drop', DragAndDrop.handleDrop)
+})
+
 createNewTaskInput.addEventListener('keyup', displayNewTask)
 toDoList.addEventListener('click', handleTask)
-// window.addEventListener('load', highlightAllBtn)
 handleState()
 countTasks()
-
-// local storage
-// drag and drop
 
 // DRY (za duzo np. let tasksArray = [...tasks])
 // all/active/completed zle dziala jak zmieniam width apki oraz clear completed zabiera podswiedlenie na buttonach
 // na onload apki chcialbym zeby button "all" byl jako aktywny oraz podobnie po wyczyszczeniu wszystkich taskow completed
 // na telefonie nie dziala oznaczanie taska jako completed
 // local storage dubluje moje taski przy appendowaniu
+// drag and drop nie wczytuje taskow ktore dodaje i nadpisuje taski zamiast przesuwac
