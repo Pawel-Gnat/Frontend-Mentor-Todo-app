@@ -15,9 +15,6 @@ let taskId = 0
 let inputId = 0
 let arrayStorageOfTasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [] // my locally storaged tasks
 
-localStorage.setItem('tasks', JSON.stringify(arrayStorageOfTasks))
-const data = JSON.parse(localStorage.getItem('tasks')) // fetched tasks from local storage
-
 function emptyState() {
 	// display instructions how to use and application if there are no tasks created
 	const emptyState = document.createElement('div')
@@ -67,33 +64,52 @@ const newTask = text => {
 	localStorage.setItem('tasks', JSON.stringify(arrayStorageOfTasks))
 }
 
-data.forEach(item => {
+arrayStorageOfTasks.forEach(item => {
 	// append tasks from local storage
 	newTask(item)
 })
 
-class ErrorState {
-	constructor(msg) {
-		this.msg = msg
-	}
+// class ErrorState {
+// 	constructor(msg) {
+// 		this.msg = msg
+// 	}
 
-	showError() {
-		const textError = document.querySelector('.error__text')
+// 	showError() {
+// 		const textError = document.querySelector('.error__text')
 
-		if (!showError.classList.contains('error-display')) {
-			textError.textContent = `${this.msg}`
-			showError.classList.add('error-display')
+// 		if (!showError.classList.contains('error-display')) {
+// 			textError.textContent = `${this.msg}`
+// 			showError.classList.add('error-display')
 
-			setTimeout(() => {
-				showError.classList.add('error-hide')
-			}, 2000)
+// 			setTimeout(() => {
+// 				showError.classList.add('error-hide')
+// 			}, 2000)
 
-			setTimeout(() => {
-				showError.classList.remove('error-display')
-				showError.classList.remove('error-hide')
-				textError.textContent = ''
-			}, 2500)
-		}
+// 			setTimeout(() => {
+// 				showError.classList.remove('error-display')
+// 				showError.classList.remove('error-hide')
+// 				textError.textContent = ''
+// 			}, 2500)
+// 		}
+// 	}
+// }
+
+function displayError(msg) {
+	const textError = document.querySelector('.error__text')
+
+	if (!showError.classList.contains('error-display')) {
+		textError.textContent = `${msg}`
+		showError.classList.add('error-display')
+
+		setTimeout(() => {
+			showError.classList.add('error-hide')
+		}, 2000)
+
+		setTimeout(() => {
+			showError.classList.remove('error-display')
+			showError.classList.remove('error-hide')
+			textError.textContent = ''
+		}, 2500)
 	}
 }
 
@@ -107,8 +123,7 @@ const displayNewTask = event => {
 	}
 
 	if (inputValue.match(emptyspace) || inputValue == '') {
-		const error = new ErrorState('Please enter the content of the task')
-		error.showError()
+		displayError('Please enter the content of the task')
 		newTaskInput.value = ''
 		return
 	}
@@ -144,7 +159,9 @@ function deleteTask(e) {
 		deleteSelectedTask.remove()
 		countTasks()
 
-		let removedTask = data.filter(tasks => tasks !== `${e.target.closest('li').children.item(2).textContent}`)
+		let removedTask = arrayStorageOfTasks.filter(
+			tasks => tasks !== `${e.target.closest('li').children.item(2).textContent}`
+		)
 
 		localStorage.setItem('tasks', JSON.stringify(removedTask))
 	}, 400)
@@ -153,7 +170,7 @@ function deleteTask(e) {
 function setTaskAsCompleted(e) {
 	// set as completed function
 	const completeTask = e.target.closest('li')
-	const completeTaskImg = completeTask.getElementsByTagName('span')[0]
+	const completeTaskImg = completeTask.getElementsByClassName('task__circle')[0]
 
 	completeTask.classList.toggle('task-completed-text')
 	completeTaskImg.classList.toggle('task-completed-circle')
@@ -210,8 +227,7 @@ taskButtons.forEach(btn => {
 					task.classList.add('hide')
 				})
 			} else {
-				const error = new ErrorState("There aren't any active tasks")
-				error.showError()
+				displayError("There aren't any active tasks")
 			}
 		}
 
@@ -222,8 +238,7 @@ taskButtons.forEach(btn => {
 					task.classList.add('hide')
 				})
 			} else {
-				const error = new ErrorState("There aren't any completed tasks")
-				error.showError()
+				displayError("There aren't any completed tasks")
 			}
 		}
 
@@ -231,8 +246,7 @@ taskButtons.forEach(btn => {
 			if (completedArray.length > 0) {
 				deleteCompletedTasks()
 			} else {
-				const error = new ErrorState('Nothing to clear')
-				error.showError()
+				displayError('Nothing to clear')
 			}
 		}
 	})
