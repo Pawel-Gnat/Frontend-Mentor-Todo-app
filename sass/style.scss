@@ -304,8 +304,7 @@ a {
 	}
 }
 
-.button-container,
-.button-container2 {
+.task-container .button-container {
 	font-size: $btn-size;
 	display: flex;
 	flex-direction: row;
@@ -346,8 +345,11 @@ a {
 	}
 }
 
-.button-container2 {
+.button-container {
+	display: flex;
 	justify-content: center;
+	min-height: 5rem;
+	padding: 0 2.5rem;
 	border-top: none;
 	border-radius: 0.5rem;
 	background-color: var(--bg-card);
@@ -418,14 +420,12 @@ footer {
 		background: url(../images/bg-desktop-dark.jpg) center no-repeat;
 		background-size: cover;
 	}
-
-	.button-container {
-		&__state-btns {
-			display: block;
-		}
+	
+	.task-container .button-container__state-btns {
+		display: block;
 	}
 
-	.button-container2 {
+	.button-container {
 		display: none;
 	}
 }

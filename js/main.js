@@ -1,16 +1,12 @@
 'use strict'
 
 import changeTheme from './theme.js'
-import * as DragAndDrop from './drag&drop.js'
+import { handleDragStart, handleDragEnd, handleDragOver, handleDrop } from './drag&drop.js'
 
 const toDoList = document.querySelector('.tasks-box')
-const createNewTaskInput = document.querySelector('.input-container__input')
+const newTaskInput = document.querySelector('.input-container__input')
 const showError = document.querySelector('.error')
-
-const taskButtons = [
-	...document.querySelectorAll('.button-container button'),
-	...document.querySelectorAll('.button-container2 button'),
-]
+const taskButtons = [...document.querySelectorAll('.button-container button')]
 
 const tasks = document.getElementsByClassName('task')
 const emptyStateContainer = document.getElementsByClassName('empty-state')
@@ -30,7 +26,7 @@ function emptyState() {
 		<h2 class="empty-state__heading">Please create a new task</h2>
 		<div class="empty-state__option">
 		<span class="empty-state__option--circle"></span>
-		<p class="empty-state__option--text">Select circle or text to mark task as completed</p>
+		<p class="empty-state__option--text">Select text to mark task as completed</p>
 		</div>
 		<div class="empty-state__option">
 		<img src="./images/icon-cross.svg" alt="Delete task icon" class="empty-state__option--x-img">
@@ -49,7 +45,7 @@ function handleState() {
 	}, 400)
 }
 
-const createNewTask = text => {
+const newTask = text => {
 	// function creates a new task
 	taskId++
 	inputId++
@@ -73,7 +69,7 @@ const createNewTask = text => {
 
 data.forEach(item => {
 	// append tasks from local storage
-	createNewTask(item)
+	newTask(item)
 })
 
 class ErrorState {
@@ -102,27 +98,28 @@ class ErrorState {
 }
 
 const displayNewTask = event => {
-	// funciton display a created task if input value is not empty
-	if (event.key == 'Enter') {
-		let emptyspace = /^\s*$/
-		let inputValue = createNewTaskInput.value
+	// function display a created task if input value is not empty
+	let emptyspace = /^\s*$/
+	let inputValue = newTaskInput.value
 
-		if (!inputValue.match(emptyspace) && inputValue !== '') {
-			createNewTask(createNewTaskInput.value)
-
-			if (createNewTaskInput.value !== '') {
-				if (emptyStateContainer.length === 1) {
-					emptyStateContainer[0].remove()
-				}
-			}
-
-			createNewTaskInput.value = ''
-			countTasks()
-		} else {
-			const error = new ErrorState('Please enter the content of the task')
-			error.showError()
-		}
+	if (event.key !== 'Enter') {
+		return
 	}
+
+	if (inputValue.match(emptyspace) || inputValue == '') {
+		const error = new ErrorState('Please enter the content of the task')
+		error.showError()
+		newTaskInput.value = ''
+		return
+	}
+
+	if (emptyStateContainer.length === 1) {
+		emptyStateContainer[0].remove()
+	}
+
+	newTask(newTaskInput.value)
+	newTaskInput.value = ''
+	countTasks()
 }
 
 const handleTask = e => {
@@ -166,25 +163,16 @@ function countTasks() {
 	// displays information about items left (left bottom corner)
 	const currentTasksNumber = document.querySelector('.button-container__text')
 	let tasksArray = [...tasks]
-	let activeArray = []
+	let activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
 
-	if (tasks.length > 0) {
-		activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
-	}
-
-	activeArray.length === 1
-		? (currentTasksNumber.textContent = `${activeArray.length} item left`)
-		: (currentTasksNumber.textContent = `${activeArray.length} items left`)
+	currentTasksNumber.textContent =
+		activeArray.length === 1 ? `${activeArray.length} item left` : `${activeArray.length} items left`
 }
 
 function deleteCompletedTasks() {
 	// delete completed task function
 	let tasksArray = [...tasks]
-	let completedArray = []
-
-	if (tasks.length > 0) {
-		completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
-	}
+	let completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
 
 	completedArray.forEach(task => {
 		task.classList.add('task-remove')
@@ -201,14 +189,8 @@ taskButtons.forEach(btn => {
 	btn.addEventListener('click', () => {
 		const activeBtnClass = document.querySelector('.active-btn')
 		let tasksArray = [...tasks]
-		let completedArray = []
-		let activeArray = []
-
-		if (tasks.length > 0) {
-			completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
-
-			activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
-		}
+		let completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
+		let activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
 
 		if (activeBtnClass) {
 			activeBtnClass.classList.remove('active-btn')
@@ -255,56 +237,15 @@ taskButtons.forEach(btn => {
 		}
 	})
 })
-
-// document.addEventListener('DOMContentLoaded', e => {
-// 	// drag and drop function
-// 	let allTasks = [...document.getElementsByClassName('task')]
-
-// 	function handleDragStart(e) {
-// 		this.style.opacity = 0.4
-
-// 		e.dataTransfer.effectAllowed = 'move'
-// 		e.dataTransfer.setData('text/html', this.innerHTML)
-// 	}
-
-// 	function handleDragEnd(e) {
-// 		this.style.opacity = 1
-// 	}
-
-// 	function handleDragOver(e) {
-// 		e.preventDefault()
-// 	}
-
-// 	function handleDrop(e) {
-// 		e.preventDefault()
-// 		e.stopPropagation()
-
-// 		this.innerHTML = e.dataTransfer.getData('text/html')
-// 		e.target.append(this.innerHTML)
-// 	}
-
-// 	allTasks.forEach(task => {
-// 		task.addEventListener('dragstart', handleDragStart)
-// 		task.addEventListener('dragover', handleDragOver)
-// 		task.addEventListener('dragend', handleDragEnd)
-// 		task.addEventListener('drop', handleDrop)
-// 	})
 ;[...document.getElementsByClassName('task')].forEach(task => {
 	// drag and drop function
-	task.addEventListener('dragstart', DragAndDrop.handleDragStart)
-	task.addEventListener('dragover', DragAndDrop.handleDragOver)
-	task.addEventListener('dragend', DragAndDrop.handleDragEnd)
-	task.addEventListener('drop', DragAndDrop.handleDrop)
+	task.addEventListener('dragstart', handleDragStart)
+	task.addEventListener('dragover', handleDragOver)
+	task.addEventListener('dragend', handleDragEnd)
+	task.addEventListener('drop', handleDrop)
 })
 
-createNewTaskInput.addEventListener('keyup', displayNewTask)
+newTaskInput.addEventListener('keyup', displayNewTask)
 toDoList.addEventListener('click', handleTask)
 handleState()
 countTasks()
-
-// DRY (za duzo np. let tasksArray = [...tasks])
-// all/active/completed zle dziala jak zmieniam width apki oraz clear completed zabiera podswiedlenie na buttonach
-// na onload apki chcialbym zeby button "all" byl jako aktywny oraz podobnie po wyczyszczeniu wszystkich taskow completed
-// na telefonie nie dziala oznaczanie taska jako completed
-// local storage dubluje moje taski przy appendowaniu
-// drag and drop nie wczytuje taskow ktore dodaje i nadpisuje taski zamiast przesuwac

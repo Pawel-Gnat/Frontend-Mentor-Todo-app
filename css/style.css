@@ -469,8 +469,7 @@ a {
   width: 1.4rem;
 }
 
-.button-container,
-.button-container2 {
+.task-container .button-container {
   font-size: clamp(1.2rem, 1vw, 1.4rem);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -488,18 +487,15 @@ a {
   min-height: 5rem;
   padding: 0 2.5rem;
 }
-.button-container__text,
-.button-container2__text {
+.task-container .button-container__text {
   color: var(--btn-color);
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-.button-container__state-btns,
-.button-container2__state-btns {
+.task-container .button-container__state-btns {
   display: none;
 }
-.button-container__state-btns--btn,
-.button-container2__state-btns--btn {
+.task-container .button-container__state-btns--btn {
   font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
@@ -510,12 +506,10 @@ a {
   cursor: pointer;
   font-weight: 700;
 }
-.button-container__state-btns--btn:hover,
-.button-container2__state-btns--btn:hover {
+.task-container .button-container__state-btns--btn:hover {
   color: var(--btn-hover);
 }
-.button-container__clear-btn--btn,
-.button-container2__clear-btn--btn {
+.task-container .button-container__clear-btn--btn {
   font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
@@ -528,15 +522,19 @@ a {
   font-size: clamp(1.2rem, 1vw, 1.4rem);
   padding: 1rem 0;
 }
-.button-container__clear-btn--btn:hover,
-.button-container2__clear-btn--btn:hover {
+.task-container .button-container__clear-btn--btn:hover {
   color: var(--btn-hover);
 }
 
-.button-container2 {
+.button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  min-height: 5rem;
+  padding: 0 2.5rem;
   border-top: none;
   border-radius: 0.5rem;
   background-color: var(--bg-card);
@@ -545,7 +543,7 @@ a {
   -webkit-transition: background-color 0.3s;
   transition: background-color 0.3s;
 }
-.button-container2__btn {
+.button-container__btn {
   font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
@@ -556,7 +554,7 @@ a {
   cursor: pointer;
   font-weight: 700;
 }
-.button-container2__btn:hover {
+.button-container__btn:hover {
   color: var(--btn-hover);
 }
 
@@ -611,10 +609,10 @@ footer {
     background: url(../images/bg-desktop-dark.jpg) center no-repeat;
     background-size: cover;
   }
-  .button-container__state-btns {
+  .task-container .button-container__state-btns {
     display: block;
   }
-  .button-container2 {
+  .button-container {
     display: none;
   }
 }/*# sourceMappingURL=style.css.map */
