@@ -69,31 +69,6 @@ arrayStorageOfTasks.forEach(item => {
 	newTask(item)
 })
 
-// class ErrorState {
-// 	constructor(msg) {
-// 		this.msg = msg
-// 	}
-
-// 	showError() {
-// 		const textError = document.querySelector('.error__text')
-
-// 		if (!showError.classList.contains('error-display')) {
-// 			textError.textContent = `${this.msg}`
-// 			showError.classList.add('error-display')
-
-// 			setTimeout(() => {
-// 				showError.classList.add('error-hide')
-// 			}, 2000)
-
-// 			setTimeout(() => {
-// 				showError.classList.remove('error-display')
-// 				showError.classList.remove('error-hide')
-// 				textError.textContent = ''
-// 			}, 2500)
-// 		}
-// 	}
-// }
-
 function displayError(msg) {
 	const textError = document.querySelector('.error__text')
 
