@@ -318,34 +318,20 @@ a {
 		transition: color 0.3s;
 	}
 
-	&__state-btns {
-		display: none;
-
-		&--btn {
-			@include btn;
-			font-weight: 700;
-		}
-
-		&--btn:hover {
-			color: var(--btn-hover);
-		}
+	&__clear-btn {
+		@include btn;
+		text-transform: capitalize;
+		font-size: $btn-size;
+		padding: 1rem 0;
 	}
 
-	&__clear-btn {
-		&--btn {
-			@include btn;
-			text-transform: capitalize;
-			font-size: $btn-size;
-			padding: 1rem 0;
-		}
-
-		&--btn:hover {
-			color: var(--btn-hover);
-		}
+	&__clear-btn:hover {
+		color: var(--btn-hover);
 	}
 }
 
 .button-container {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	min-height: 5rem;
@@ -420,12 +406,13 @@ footer {
 		background: url(../images/bg-desktop-dark.jpg) center no-repeat;
 		background-size: cover;
 	}
-	
-	.task-container .button-container__state-btns {
-		display: block;
-	}
 
-	.button-container {
-		display: none;
+	.button-container:nth-child(3) {
+		top: -6.7rem;
+		width: min-content;
+		padding: 0;
+		margin: 0 auto;
+		background-color: transparent;
+		box-shadow: none;
 	}
 }

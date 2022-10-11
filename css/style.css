@@ -492,24 +492,7 @@ a {
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-.task-container .button-container__state-btns {
-  display: none;
-}
-.task-container .button-container__state-btns--btn {
-  font-family: "Josefin Sans", sans-serif;
-  padding: 1rem;
-  border: none;
-  background-color: transparent;
-  color: var(--btn-color);
-  -webkit-transition: color 0.3s;
-  transition: color 0.3s;
-  cursor: pointer;
-  font-weight: 700;
-}
-.task-container .button-container__state-btns--btn:hover {
-  color: var(--btn-hover);
-}
-.task-container .button-container__clear-btn--btn {
+.task-container .button-container__clear-btn {
   font-family: "Josefin Sans", sans-serif;
   padding: 1rem;
   border: none;
@@ -522,11 +505,12 @@ a {
   font-size: clamp(1.2rem, 1vw, 1.4rem);
   padding: 1rem 0;
 }
-.task-container .button-container__clear-btn--btn:hover {
+.task-container .button-container__clear-btn:hover {
   color: var(--btn-hover);
 }
 
 .button-container {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -609,10 +593,15 @@ footer {
     background: url(../images/bg-desktop-dark.jpg) center no-repeat;
     background-size: cover;
   }
-  .task-container .button-container__state-btns {
-    display: block;
-  }
-  .button-container {
-    display: none;
+  .button-container:nth-child(3) {
+    top: -6.7rem;
+    width: -webkit-min-content;
+    width: -moz-min-content;
+    width: min-content;
+    padding: 0;
+    margin: 0 auto;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+            box-shadow: none;
   }
 }/*# sourceMappingURL=style.css.map */

@@ -35,18 +35,23 @@
 
 				<div class="task-container">
 					<ul class="tasks-box">
+						<div class="empty-state">
+							<h2 class="empty-state__heading">Please create a new task</h2>
+							<div class="empty-state__option">
+								<span class="empty-state__option--circle"></span>
+								<p class="empty-state__option--text">Select text to mark task as completed</p>
+							</div>
+							<div class="empty-state__option">
+								<img src="./images/icon-cross.svg" alt="Delete task icon"
+									class="empty-state__option--x-img">
+								<p class="empty-state__option--text">Select cross sign to delete task</p>
+							</div>
+						</div>
 					</ul>
 					<div class="button-container">
 						<p class="button-container__text"></p>
-						<div class="button-container__state-btns">
-							<button class="button-container__state-btns--btn" data-status="all">All</button>
-							<button class="button-container__state-btns--btn" data-status="active">Active</button>
-							<button class="button-container__state-btns--btn" data-status="completed">Completed</button>
-						</div>
-						<div class="button-container__clear-btn">
-							<button class="button-container__clear-btn--btn" data-status="clear">Clear
+							<button class="button-container__clear-btn" data-status="clear">Clear
 								completed</button>
-						</div>
 					</div>
 				</div>
 

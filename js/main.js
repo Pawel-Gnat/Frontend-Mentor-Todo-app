@@ -7,43 +7,40 @@ const toDoList = document.querySelector('.tasks-box')
 const newTaskInput = document.querySelector('.input-container__input')
 const showError = document.querySelector('.error')
 const taskButtons = [...document.querySelectorAll('.button-container button')]
-
-const tasks = document.getElementsByClassName('task')
-const emptyStateContainer = document.getElementsByClassName('empty-state')
+const emptyState = document.querySelector('.empty-state')
 
 let taskId = 0
 let inputId = 0
-let arrayStorageOfTasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [] // my locally storaged tasks
+let storageOfCreatedTasks = localStorage.getItem('tasks') ? parseFromLocalStorage() : []
 
-function emptyState() {
-	// display instructions how to use and application if there are no tasks created
-	const emptyState = document.createElement('div')
-	emptyState.className = 'empty-state'
-	emptyState.innerHTML = `
-		<h2 class="empty-state__heading">Please create a new task</h2>
-		<div class="empty-state__option">
-		<span class="empty-state__option--circle"></span>
-		<p class="empty-state__option--text">Select text to mark task as completed</p>
-		</div>
-		<div class="empty-state__option">
-		<img src="./images/icon-cross.svg" alt="Delete task icon" class="empty-state__option--x-img">
-			<p class="empty-state__option--text">Select cross sign to delete task</p>
-			</div>
-			`
-	return emptyState
+let tasks = {
+	allTasks: function () {
+		return document.getElementsByClassName('task')
+	},
+
+	activeTasks: function () {
+		return [...tasks.allTasks()].filter(task => !task.classList.contains('task-completed-text'))
+	},
+
+	completedTasks: function () {
+		return [...tasks.allTasks()].filter(task => task.classList.contains('task-completed-text'))
+	},
 }
 
-function handleState() {
-	// append empty state function
-	setTimeout(() => {
-		if (tasks.length === 0) {
-			toDoList.insertBefore(emptyState(), toDoList.firstChild)
-		}
-	}, 400)
+function addToLocalStorage(task) {
+	localStorage.setItem('tasks', JSON.stringify(task))
+}
+
+function parseFromLocalStorage() {
+	return JSON.parse(localStorage.getItem('tasks'))
+}
+
+function handleEmptyState() {
+	let allTasksNumber = tasks.allTasks().length
+	allTasksNumber === 0 ? emptyState.classList.remove('hide') : emptyState.classList.add('hide')
 }
 
 const newTask = text => {
-	// function creates a new task
 	taskId++
 	inputId++
 	let newTask = document.createElement('li')
@@ -60,12 +57,13 @@ const newTask = text => {
 
 	toDoList.insertBefore(newTask, toDoList.firstChild)
 
-	arrayStorageOfTasks.push(text)
-	localStorage.setItem('tasks', JSON.stringify(arrayStorageOfTasks))
+	if (!storageOfCreatedTasks.includes(text)) {
+		storageOfCreatedTasks.push(text)
+		addToLocalStorage(storageOfCreatedTasks)
+	}
 }
 
-arrayStorageOfTasks.forEach(item => {
-	// append tasks from local storage
+storageOfCreatedTasks.forEach(item => {
 	newTask(item)
 })
 
@@ -89,7 +87,6 @@ function displayError(msg) {
 }
 
 const displayNewTask = event => {
-	// function display a created task if input value is not empty
 	let emptyspace = /^\s*$/
 	let inputValue = newTaskInput.value
 
@@ -103,47 +100,45 @@ const displayNewTask = event => {
 		return
 	}
 
-	if (emptyStateContainer.length === 1) {
-		emptyStateContainer[0].remove()
-	}
-
 	newTask(newTaskInput.value)
 	newTaskInput.value = ''
-	countTasks()
+	displayNumberOfActiveTasks()
+	handleEmptyState()
 }
 
 const handleTask = e => {
-	// function search for a button inside tasks container and delete/set a complete them on click
 	if (e.target.closest('button')) {
 		deleteTask(e)
-		handleState()
+
+		setTimeout(() => {
+			handleEmptyState()
+		}, 400)
 	}
 
 	if (e.target.closest('input')) {
 		setTaskAsCompleted(e)
-		countTasks()
+		displayNumberOfActiveTasks()
 	}
 }
 
 function deleteTask(e) {
-	// delete task function
 	let deleteSelectedTask = e.target.closest('li')
 	deleteSelectedTask.classList.add('task-remove')
 
 	setTimeout(() => {
 		deleteSelectedTask.remove()
-		countTasks()
+		displayNumberOfActiveTasks()
 
-		let removedTask = arrayStorageOfTasks.filter(
+		let remainedTasks = storageOfCreatedTasks.filter(
 			tasks => tasks !== `${e.target.closest('li').children.item(2).textContent}`
 		)
 
-		localStorage.setItem('tasks', JSON.stringify(removedTask))
+		localStorage.setItem('tasks', JSON.stringify(remainedTasks))
+		storageOfCreatedTasks = remainedTasks
 	}, 400)
 }
 
 function setTaskAsCompleted(e) {
-	// set as completed function
 	const completeTask = e.target.closest('li')
 	const completeTaskImg = completeTask.getElementsByClassName('task__circle')[0]
 
@@ -151,28 +146,30 @@ function setTaskAsCompleted(e) {
 	completeTaskImg.classList.toggle('task-completed-circle')
 }
 
-function countTasks() {
-	// displays information about items left (left bottom corner)
+function displayNumberOfActiveTasks() {
 	const currentTasksNumber = document.querySelector('.button-container__text')
-	let tasksArray = [...tasks]
-	let activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
+	let activeArray = tasks.activeTasks()
 
 	currentTasksNumber.textContent =
 		activeArray.length === 1 ? `${activeArray.length} item left` : `${activeArray.length} items left`
 }
 
 function deleteCompletedTasks() {
-	// delete completed task function
-	let tasksArray = [...tasks]
-	let completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
+	let completedArray = tasks.completedTasks()
 
 	completedArray.forEach(task => {
+		let taskValue = task.children.item(2).textContent
 		task.classList.add('task-remove')
+
+		if (storageOfCreatedTasks.includes(taskValue)) {
+			storageOfCreatedTasks = storageOfCreatedTasks.filter(task => task !== taskValue)
+			localStorage.setItem('tasks', JSON.stringify(storageOfCreatedTasks))
+		}
 
 		setTimeout(() => {
 			task.remove()
+			handleEmptyState()
 		}, 400)
-		handleState()
 	})
 }
 
@@ -180,9 +177,9 @@ taskButtons.forEach(btn => {
 	// bottom task buttons handler (for all/active/completed)
 	btn.addEventListener('click', () => {
 		const activeBtnClass = document.querySelector('.active-btn')
-		let tasksArray = [...tasks]
-		let completedArray = tasksArray.filter(task => task.classList.contains('task-completed-text'))
-		let activeArray = tasksArray.filter(task => !task.classList.contains('task-completed-text'))
+		let tasksArray = [...tasks.allTasks()]
+		let completedArray = tasks.completedTasks()
+		let activeArray = tasks.activeTasks()
 
 		if (activeBtnClass) {
 			activeBtnClass.classList.remove('active-btn')
@@ -226,7 +223,8 @@ taskButtons.forEach(btn => {
 		}
 	})
 })
-;[...document.getElementsByClassName('task')].forEach(task => {
+
+tasks.activeTasks().forEach(task => {
 	// drag and drop function
 	task.addEventListener('dragstart', handleDragStart)
 	task.addEventListener('dragover', handleDragOver)
@@ -236,5 +234,5 @@ taskButtons.forEach(btn => {
 
 newTaskInput.addEventListener('keyup', displayNewTask)
 toDoList.addEventListener('click', handleTask)
-handleState()
-countTasks()
+handleEmptyState()
+displayNumberOfActiveTasks()
