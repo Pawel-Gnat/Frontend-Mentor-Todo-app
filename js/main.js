@@ -1,13 +1,13 @@
 'use strict'
 
 import changeTheme from './theme.js'
-import { handleDragStart, handleDragEnd, handleDragOver, handleDrop } from './drag&drop.js'
 
 const toDoList = document.querySelector('.tasks-box')
 const newTaskInput = document.querySelector('.input-container__input')
 const showError = document.querySelector('.error')
-const taskButtons = [...document.querySelectorAll('.button-container button')]
+const taskButtons = document.querySelectorAll('.button-container__btn')
 const emptyState = document.querySelector('.empty-state')
+const clearCompletedTasksBtn = document.querySelector('.button-container__clear-btn')
 
 let taskId = 0
 let inputId = 0
@@ -173,66 +173,116 @@ function deleteCompletedTasks() {
 	})
 }
 
-taskButtons.forEach(btn => {
-	// bottom task buttons handler (for all/active/completed)
-	btn.addEventListener('click', () => {
-		const activeBtnClass = document.querySelector('.active-btn')
-		let tasksArray = [...tasks.allTasks()]
-		let completedArray = tasks.completedTasks()
-		let activeArray = tasks.activeTasks()
+function handleClearCompletedTasksBtn() {
+	let completedArray = tasks.completedTasks()
 
-		if (activeBtnClass) {
-			activeBtnClass.classList.remove('active-btn')
-			tasksArray.forEach(task => {
-				task.classList.remove('hide')
+	if (completedArray.length > 0) {
+		deleteCompletedTasks()
+	} else {
+		displayError('Nothing to clear')
+	}
+}
+
+function activeTaskBtn() {
+	const activeBtnClass = document.querySelector('.active-btn')
+	let tasksArray = [...tasks.allTasks()]
+
+	if (activeBtnClass) {
+		activeBtnClass.classList.remove('active-btn')
+		tasksArray.forEach(task => {
+			task.classList.remove('hide')
+		})
+	}
+}
+
+function addActiveClassToBtnAll() {
+	let AllTasksBtn = taskButtons[0]
+	AllTasksBtn.classList.add('active-btn')
+}
+
+function taskStatusView(e) {
+	let completedArray = tasks.completedTasks()
+	let activeArray = tasks.activeTasks()
+
+	if (e.target.dataset.status == 'all') {
+		activeTaskBtn()
+		e.target.classList.add('active-btn')
+	}
+
+	if (e.target.dataset.status == 'active') {
+		if (activeArray.length > 0) {
+			activeTaskBtn()
+			e.target.classList.add('active-btn')
+
+			completedArray.forEach(task => {
+				task.classList.add('hide')
 			})
+		} else {
+			displayError("There aren't any active tasks")
 		}
+	}
 
-		if (btn.dataset.status == 'all') {
-			btn.classList.add('active-btn')
-		}
+	if (e.target.dataset.status == 'completed') {
+		if (completedArray.length > 0) {
+			activeTaskBtn()
+			e.target.classList.add('active-btn')
 
-		if (btn.dataset.status == 'active') {
-			if (activeArray.length > 0) {
-				btn.classList.add('active-btn')
-				completedArray.forEach(task => {
-					task.classList.add('hide')
-				})
-			} else {
-				displayError("There aren't any active tasks")
-			}
+			activeArray.forEach(task => {
+				task.classList.add('hide')
+			})
+		} else {
+			displayError("There aren't any completed tasks")
 		}
+	}
+}
 
-		if (btn.dataset.status == 'completed') {
-			if (completedArray.length > 0) {
-				btn.classList.add('active-btn')
-				activeArray.forEach(task => {
-					task.classList.add('hide')
-				})
-			} else {
-				displayError("There aren't any completed tasks")
-			}
-		}
-
-		if (btn.dataset.status == 'clear') {
-			if (completedArray.length > 0) {
-				deleteCompletedTasks()
-			} else {
-				displayError('Nothing to clear')
-			}
-		}
+taskButtons.forEach(btn => {
+	btn.addEventListener('click', e => {
+		taskStatusView(e)
 	})
 })
 
-tasks.activeTasks().forEach(task => {
-	// drag and drop function
-	task.addEventListener('dragstart', handleDragStart)
-	task.addEventListener('dragover', handleDragOver)
-	task.addEventListener('dragend', handleDragEnd)
-	task.addEventListener('drop', handleDrop)
+document.addEventListener('DOMContentLoaded', e => {
+	let sourceTaskElement
+
+	function handleDragStart(e) {
+		this.style.opacity = 0.4
+
+		sourceTaskElement = this
+
+		e.dataTransfer.effectAllowed = 'move'
+		e.dataTransfer.setData('text/html', this.innerHTML)
+	}
+
+	function handleDragEnd() {
+		this.style.opacity = 1
+	}
+
+	function handleDragOver(e) {
+		e.preventDefault()
+	}
+
+	function handleDrop(e) {
+		e.preventDefault()
+		e.stopPropagation()
+
+		if (sourceTaskElement !== this) {
+			sourceTaskElement.innerHTML = this.innerHTML
+			this.innerHTML = e.dataTransfer.getData('text/html')
+		}
+	}
+
+	tasks.activeTasks().forEach(task => {
+		task.addEventListener('dragstart', handleDragStart)
+		task.addEventListener('dragover', handleDragOver)
+		task.addEventListener('dragend', handleDragEnd)
+		task.addEventListener('drop', handleDrop)
+	})
 })
 
 newTaskInput.addEventListener('keyup', displayNewTask)
 toDoList.addEventListener('click', handleTask)
+clearCompletedTasksBtn.addEventListener('click', handleClearCompletedTasksBtn)
+addActiveClassToBtnAll()
 handleEmptyState()
 displayNumberOfActiveTasks()
